@@ -1,23 +1,28 @@
 import React, { use } from "react";
 import { AuthContext } from "../../contexts/AuthContext/AuthContext";
+import { useNavigate } from "react-router";
 
-const SocialLogin = () => {
+const SocialLogin = ({from}) => {
+  const { signInWithGoogle } = use(AuthContext);
+  const navigate = useNavigate();
 
-    const {signInWithGoogle} = use(AuthContext)
-
-    const handleGoogleSignIn = () => {
-        signInWithGoogle()
-        .then(result => {
-            console.log(result)
-        })
-        .catch(error => {
-            console.log(error)
-        })
-    }
+  const handleGoogleSignIn = () => {
+    signInWithGoogle()
+      .then((result) => {
+        console.log(result);
+        navigate(from || '/');
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
   return (
     <div>
       <div className="divider">OR</div>
-      <button onClick={handleGoogleSignIn} className="btn bg-white text-black border-[#e5e5e5]">
+      <button
+        onClick={handleGoogleSignIn}
+        className="btn bg-white text-black border-[#e5e5e5]"
+      >
         <svg
           aria-label="Google logo"
           width="16"
